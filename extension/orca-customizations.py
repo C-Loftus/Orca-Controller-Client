@@ -4,7 +4,7 @@ from enum import Enum
 import os
 import threading
 
-LOGGER = logging.getLogger()
+LOGGER = logging.getLogger("orca-controller")
 LOGGER.setLevel(logging.DEBUG) 
 file_handler = logging.FileHandler("/tmp/orca-controller.log")
 formatter = logging.Formatter("%(levelname)s - %(message)s - %(asctime)s") 
@@ -12,7 +12,7 @@ file_handler.setFormatter(formatter)
 LOGGER.addHandler(file_handler)
 
 console_handler = logging.StreamHandler(sys.stdout)
-console_handler.setLevel(logging.INFO)
+console_handler.setLevel(logging.DEBUG)
 LOGGER.addHandler(console_handler)
 
 class CommandSchema(Enum):
@@ -55,9 +55,9 @@ class OrcaControllerServer:
             case _:
                 return f"404, error undefined request '{request}'"
 
-    def serve_forever(self):
+    def _serve_forever(self):
         """Continuously read from the request pipe and write to the response pipe."""
-        logging.debug(f"Server started using named pipes: {self.request_pipe}, {self.response_pipe}")
+        LOGGER.debug(f"Server started using named pipes: {self.request_pipe}, {self.response_pipe}")
         while self.running:
             with open(self.request_pipe, "r") as request_pipe:
                 request = request_pipe.readline().strip()
@@ -69,9 +69,9 @@ class OrcaControllerServer:
                 with open(self.response_pipe, "w") as response_pipe:
                     response_pipe.write(response + "\n")
 
-    def run_in_background_thread(self):
+    def server_forever_in_background_thread(self):
         """Run the server in a background thread."""
-        self.server_thread = threading.Thread(target=self.serve_forever, daemon=True)
+        self.server_thread = threading.Thread(target=self._serve_forever, daemon=True)
         self.server_thread.start()
 
     def stop(self):
@@ -84,11 +84,10 @@ try:
     orca.speech.speak("Orca controller server started successfully", interrupt=True)
     LOGGER.info("Orca controller server started successfully")
 except Exception as e:
-    print(e)
     LOGGER.fatal(f"Failed to import Orca dependencies for controller server {e}")
 
 try:
     server = OrcaControllerServer()
-    server.serve_forever()
+    server.server_forever_in_background_thread()
 except Exception as e:
     LOGGER.fatal(f"Failed to start Orca controller server: {e}")

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ ! -f ~/.local/share/orca/orca-customizations.py ] || [ ! -s ~/.local/share/orca/orca-customizations.py ]; then
-    cp src/orca-customizations.py ~/.local/share/orca/orca-customizations.py
+    cp extension/orca-customizations.py ~/.local/share/orca/orca-customizations.py
     echo "Success"
     exit 0
 else
