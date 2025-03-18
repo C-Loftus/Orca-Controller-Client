@@ -17,3 +17,5 @@ Run `make test` to run a test which sends a healthcheck message to the screen re
 To my understanding at the moment Orca only imports directly from `~/.local/share/orca/orca-customizations.py`. As a result, you have to bundle all your Python code in this file, else it will not work. I have tried putting helper code in a `lib/` package with a corresponding `__init__.py` file, but it did not work. All user code being in one file makes installing scripts a bit harder and we need to check more edge cases to make sure that we don't break user customizations.
 
 `~/.local/share/orca/orca-scripts/` appears to be another location that Orca imports from, but in my testing it does not seem to auto import nor run the Python scripts inside. 
+
+Orca runs all custom Python on the same thread as the main screenreader, thus in order to prevent custom code blocking Orca, you should run it in a separate new thread.
