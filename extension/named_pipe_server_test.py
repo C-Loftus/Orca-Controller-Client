@@ -20,7 +20,7 @@ class OrcaControllerClient():
 def test_health_check():
     """Test the /health endpoint using named pipes."""
     server = orcaCustomizations.OrcaControllerServer()
-    server.run_in_background_thread()
+    server.server_forever_in_background_thread()
     # Ensure server has time to start
     time.sleep(0.5)
     OrcaControllerClient().send(orcaCustomizations.CommandSchema.HEALTH_CHECK)
