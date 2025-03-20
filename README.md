@@ -20,4 +20,4 @@ Run `make test` to run a test which sends a healthcheck message to the screen re
 - `~/.local/share/orca/orca-scripts/` appears to be another location that Orca imports from, but in my testing it does not seem to auto import nor run the Python scripts inside. 
 - Orca runs all custom Python on the same thread as the main screenreader, thus in order to prevent custom code blocking Orca, you should run it in a separate new thread.
 - The internals of Orca are not necessarily inteded to be scripted in a general purpose way and thus you should limit using anything too deep in the codebase since it could easily be broken between Orca version updates.
-
+- You must make sure to catch all errors in your `orca-customizations.py` file. If you do not, Orca may fail silently. As a best practice you should be putting `try` `except` blocks around even trivial things like imports that could potentially fail.
