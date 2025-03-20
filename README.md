@@ -2,7 +2,9 @@
 
 This repository is an experiment for controlling the Orca screen reader from external clients. It has been tested with Orca version 46.1 on Ubuntu 24.04 
 
-This repository's eventual goal is to provide a simple way for clients to send commands to Orca like speaking text, or changing settings. The design of this is inspired by the interface provided by the [NVDA controller client](https://github.com/nvaccess/nvda/blob/master/extras/controllerClient/readme.md). In an ideal world there would be a full fledged Orca plugin system, however, this is not the case yet and it would be a significant amount of work to implement while doing so in a way that prevents unintended user code from breaking the screen reader. A simple controller client like this still allows for a lot of customization while preventing users from messing with Orca internals. 
+This repository's eventual goal is to provide a simple way for clients to send commands to Orca like speaking text, or changing settings. The design of this is inspired by the interface provided by the [NVDA controller client](https://github.com/nvaccess/nvda/blob/master/extras/controllerClient/readme.md). In an ideal world there would be a full fledged Orca plugin system, however, this is not the case yet and it would be a significant amount of work to implement while doing so in a way that prevents unintended user code from breaking the screen reader. A simple controller client like this still allows for a lot of customization while preventing users from messing with Orca internals.
+
+Note this repo is mainly for documentation and serving as a template for others who are interested, not production usage.
 
 ## Installation
 
